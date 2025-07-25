@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function initializeSurvey() {
         try {
             // Asegúrate de que esta ruta sea correcta para tu proyecto
-            const response = await fetch('../src/Openday.json');
+            const response = await fetch('Openday.json');
             if (!response.ok) throw new Error(`Network response was not ok (${response.status})`);
             const rawQuestions = await response.json();
             

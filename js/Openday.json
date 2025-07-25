@@ -1,0 +1,133 @@
+
+[
+  {
+    "id": "organization",
+    "text": "¿Qué tan satisfecho estás con la organización general del Open Day?",
+    "options": [
+      { "value": 1, "label": "Malo" },
+      { "value": 2, "label": "Regular" },
+      { "value": 3, "label": "Bueno" },
+      { "value": 4, "label": "Muy bueno" },
+      { "value": 5, "label": "Excelente" }
+    ]
+  },
+  {
+    "id": "clarity",
+    "text": "¿Qué tan clara fue la presentación de la carrera?",
+    "options": [
+      { "value": 1, "label": "Confusa" },
+      { "value": 2, "label": "Poco clara" },
+      { "value": 3, "label": "Adecuada" },
+      { "value": 4, "label": "Clara" },
+      { "value": 5, "label": "Muy clara" }
+    ]
+  },
+  {
+    "id": "staff_support",
+    "text": "¿Cómo calificarías la atención del personal durante el evento?",
+    "options": [
+      { "value": 1, "label": "Deficiente" },
+      { "value": 2, "label": "Regular" },
+      { "value": 3, "label": "Buena" },
+      { "value": 4, "label": "Muy buena" },
+      { "value": 5, "label": "Excelente" }
+    ]
+  },
+  {
+    "id": "information_quality",
+    "text": "¿Qué tan útil fue la información proporcionada sobre la carrera y los servicios?",
+    "options": [
+      { "value": 1, "label": "Nada útil" },
+      { "value": 2, "label": "Poco útil" },
+      { "value": 3, "label": "Adecuada" },
+      { "value": 4, "label": "Útil" },
+      { "value": 5, "label": "Muy útil" }
+    ]
+  },
+  {
+    "id": "facilities",
+    "text": "¿Qué te parecieron las instalaciones durante el evento?",
+    "options": [
+      { "value": 1, "label": "Malas" },
+      { "value": 2, "label": "Regulares" },
+      { "value": 3, "label": "Buenas" },
+      { "value": 4, "label": "Muy buenas" },
+      { "value": 5, "label": "Excelentes" }
+    ]
+  },
+  {
+    "id": "best_part",
+    "text": "¿Qué fue lo que más te gustó del evento?",
+    "type": "text"
+  },
+  {
+    "id": "improvement_areas",
+    "text": "¿Qué crees que podríamos mejorar para futuros eventos?",
+    "type": "text"
+  },
+  {
+    "id": "interested_program",
+    "text": "¿Qué carrera te interesó más?",
+    "type": "text"
+  },
+  {
+    "id": "recommendation",
+    "text": "En general, ¿recomendarías este Open Day a otra persona?",
+    "options": [
+  { "value": 1, "label": "No" },
+  { "value": 2, "label": "Poco probable" },
+  { "value": 3, "label": "Tal vez" },
+  { "value": 4, "label": "Probable" },
+  { "value": 5, "label": "Sí" }
+    ]
+  },
+  {
+    "id": "how_did_you_know",
+    "text": "¿Cómo conociste UNIREM?",
+    "type": "text"
+  },
+  {
+    "id": "would_return",
+    "text": "¿Volverías a otro Open Day?",
+    "options": [
+      { "value": 1, "label": "Nunca" },
+      { "value": 2, "label": "No" },
+      { "value": 3, "label": "Tal vez" },
+      { "value": 4, "label": "Sí" },
+      { "value": 5, "label": "Sí, por supuesto" }
+    ]
+  },
+  {
+    "id": "would_recommend",
+    "text": "¿Recomendarías a un familiar o amigo inscribirse en UNIREM?",
+    "options": [
+      { "value": 1, "label": "Nunca" },
+      { "value": 2, "label": "No" },
+      { "value": 3, "label": "Tal vez" },
+      { "value": 4, "label": "Sí" },
+      { "value": 5, "label": "Sí, por supuesto" }
+    ]
+  },
+  {
+    "id": "favorite_activity",
+    "text": "¿Cuál fue tu actividad favorita y por qué?",
+    "type": "text"
+  },
+  {
+    "id": "favorite_stand",
+    "text": "¿Cuál fue tu stand o lugar favorito y por qué?",
+    "type": "text"
+  },
+  {
+    "id": "activity_duration",
+    "text": "¿Las actividades tuvieron una duración adecuada?",
+    "options": [
+      { "value": 1, "label": "Ninguna" },
+      { "value": 2, "label": "No" },
+      { "value": 3, "label": "Alguna" },
+      { "value": 4, "label": "Sí" },
+      { "value": 5, "label": "Todas" }
+    ]
+  }
+]
+
