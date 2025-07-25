@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta Open Day - UNIREM</title>
+    
+    <link rel="icon" href="../images/src/cropped-f1.webp" type="image/x-icon">
+    <link rel="stylesheet" href="../src/Open.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Capas para el fondo dinámico -->
+    <div class="page-background-gradient"></div>
+    <div class="page-background-doodles"></div>
+
+    <header class="site-header">
+        <nav class="navbar" id="navbar">
+            <a href="#" class="logo">
+                <img src="../images/src/3 Logo-UNIREM-Blanco.png" alt="Logo UNIREM" height="45">
+            </a>
+            
+            <button class="nav-toggle" aria-label="Abrir menú">
+                <span class="hamburger"></span>
+            </button>
+
+            <div class="nav-links-container">
+                <div class="nav-links">
+                    <a href="https://unirem.edu.mx/">Programas</a>
+                    <a href="https://unirem-mx.github.io/Perfilador/">Test</a>
+                    <a href="https://rococo-semolina-ac92a5.netlify.app/pages/cita">Admisiones</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="survey-container">
+        <!-- IMPORTANTE: Pega tu nueva URL de implementación en el atributo 'action' -->
+        <form id="openDaySurveyForm" 
+              novalidate
+              method="POST"
+              action="https://script.google.com/macros/s/AKfycbyjEoCAZnDiC7uXta12jzkG3LNoEGU7NnOGxJYW5ckXGe5_tmiaVADy4R1UuUHEpHoJ/exec"
+              target="hidden_iframe">
+              
+             <header class="survey-header">
+                <h1>Tu opinión forma nuestro futuro</h1>
+                <p>Encuesta del Open Day</p>
+                <div class="progress-container">
+                    <div class="progress-bar" id="survey-progress-bar"></div>
+                </div>
+                <div class="progress-indicator" id="progress-indicator"></div>
+            </header>
+            
+            <div class="questions-viewport">
+                <div class="questions-wrapper" id="questions-wrapper">
+                    <div class="loader-slide"><div class="loader"></div></div>
+                </div>
+            </div>
+
+            <div class="survey-navigation">
+                <button type="button" id="prev-btn" class="nav-btn" style="display: none;">Anterior</button>
+            </div>
+            
+            <!-- Div para los inputs ocultos que generará el JS -->
+            <div id="hidden-inputs-container"></div>
+        </form>
+
+        <div id="thank-you-message" class="thank-you-message" style="display: none;">
+            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+            <h2>¡Gracias por tu opinión!</h2>
+            <p>Tus respuestas han sido enviadas. Tu feedback es esencial para mejorar.</p>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>© 2025 UNIREM. Todos los derechos reservados.</p>
+            <div class="footer-links">
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Términos de Uso</a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Iframe invisible para recibir la respuesta del envío sin recargar la página -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+    <script src="../js/open.js"></script> 
+</body>
+</html>

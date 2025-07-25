@@ -1,0 +1,135 @@
+/* === DISEÑO FINAL v4.2: CON ESTILOS DE VALIDACIÓN Y ESTADO === */
+:root {
+    --unirem-yellow: #ffc93c;
+    --unirem-purple: #8A2BE2;
+    --unirem-blue: #4169E1;
+    --unirem-dark: #1e2a3a;
+    --text-light: #5a6a7e;
+    --border-color: rgba(255, 255, 255, 0.25);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --success-color: #27ae60;
+    --error-color: #e74c3c;
+    --gradient-red: #e74c3c;
+    --gradient-orange: #e67e22;
+    --gradient-yellow: #f1c40f;
+    --gradient-lime: #a3e028;
+    --gradient-green: #2ecc71;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: var(--unirem-dark);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* --- Fondos Fusionados --- */
+.page-background-gradient, .page-background-doodles {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+}
+.page-background-gradient { background: linear-gradient(45deg, var(--unirem-purple), var(--unirem-yellow), var(--unirem-blue)); background-size: 400% 400%; animation: gradient-animation 20s ease infinite; }
+@keyframes gradient-animation { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+.page-background-doodles { background-image: url('../images/src/open.jpeg'); background-size: cover; background-position: center; opacity: 0.4; z-index: -1; }
+
+/* --- Header y Navegación Responsiva --- */
+.site-header { width: 100%; position: relative; z-index: 100; }
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; }
+.logo img { height: 40px; }
+.nav-toggle { display: block; background: transparent; border: none; padding: 0.5rem; cursor: pointer; z-index: 1000; }
+.hamburger { display: block; position: relative; width: 24px; height: 2px; background: white; transition: all 0.2s ease-in-out; }
+.hamburger::before, .hamburger::after { content: ''; position: absolute; left: 0; width: 100%; height: 2px; background: white; transition: all 0.2s ease-in-out; }
+.hamburger::before { top: -8px; }
+.hamburger::after { bottom: -8px; }
+body.nav-open .hamburger { background: transparent; }
+body.nav-open .hamburger::before { transform: rotate(45deg) translate(5px, 6px); }
+body.nav-open .hamburger::after { transform: rotate(-45deg) translate(5px, -6px); }
+.nav-links-container { position: fixed; top: 0; right: 0; width: 100%; height: 100%; background-color: rgba(30, 42, 58, 0.95); backdrop-filter: blur(10px); transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.77, 0, 0.175, 1); display: flex; justify-content: center; align-items: center; }
+body.nav-open .nav-links-container { transform: translateX(0); }
+.nav-links { display: flex; flex-direction: column; align-items: center; gap: 2rem; }
+.nav-links a { color: white; text-decoration: none; font-size: 1.5rem; font-weight: 600; }
+
+/* --- Contenido Principal y Tarjeta --- */
+main.survey-container {
+    flex-grow: 1; display: flex; justify-content: center; padding: 1rem; align-items: center;
+}
+#openDaySurveyForm, .thank-you-message {
+    width: 100%; background: rgba(255, 255, 255, 0.75);
+    border: 1px solid var(--border-color); border-radius: 24px; box-shadow: 0 16px 40px var(--shadow-color);
+    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+    padding: 2rem 1.5rem; transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* --- Barra de Progreso y Encabezado --- */
+.survey-header { text-align: center; margin-bottom: 2rem; }
+.survey-header h1 { font-size: clamp(1.5rem, 5vw, 1.8rem); margin: 0 0 0.25rem 0; font-weight: 800; }
+.survey-header p { color: var(--text-light); font-size: 1.1rem; margin-bottom: 1rem; }
+.progress-container { width: 100%; height: 10px; background-color: rgba(0, 0, 0, 0.1); border-radius: 10px; margin-bottom: 0.5rem; overflow: hidden; }
+.progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, var(--unirem-purple), var(--unirem-blue)); border-radius: 10px; transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
+.progress-indicator { font-size: 0.9rem; font-weight: 600; color: var(--unirem-purple); }
+
+/* --- Contenido de Preguntas --- */
+.questions-viewport { overflow: hidden; }
+.questions-wrapper { display: flex; transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1); }
+.question-slide { width: 100%; flex-shrink: 0; padding: 0.5rem; display: flex; flex-direction: column; align-items: center; }
+.question-text { font-size: clamp(1.1rem, 4vw, 1.3rem); font-weight: 600; text-align: center; margin: 0 0 2rem 0; min-height: 4em; display: flex; align-items: center; justify-content: center; }
+
+/* --- Opciones de Calificación y Validación --- */
+.rating-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; width: 100%; }
+.rating-option { background-color: rgba(255,255,255,0.7); border: 2px solid transparent; color: var(--unirem-dark); border-radius: 12px; padding: 1.25rem 1rem; cursor: pointer; text-align: center; font-weight: 600; transition: all 0.2s ease; }
+.rating-option:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(138, 43, 226, 0.1); }
+.rating-option.selected-1, .rating-option.selected-2, .rating-option.selected-3, .rating-option.selected-4, .rating-option.selected-5 { color: white; border-color: transparent; transform: translateY(-5px) scale(1.05); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+.rating-option.selected-1 { background: linear-gradient(45deg, #e74c3c, #c0392b); }
+.rating-option.selected-2 { background: linear-gradient(45deg, #e67e22, #d35400); }
+.rating-option.selected-3 { background: linear-gradient(45deg, #f1c40f, #f39c12); }
+.rating-option.selected-4 { background: linear-gradient(45deg, var(--gradient-lime), var(--gradient-green)); }
+.rating-option.selected-5 { background: linear-gradient(45deg, #2ecc71, #27ae60); }
+
+.question-slide textarea { width: 100%; padding: 1rem; font-family: 'Poppins', sans-serif; font-size: 1rem; border: 2px solid #e0e6f1; border-radius: 12px; background: rgba(255, 255, 255, 0.9); transition: all 0.3s; resize: vertical; }
+.question-slide textarea:focus { outline: none; border-color: var(--unirem-purple); box-shadow: 0 0 0 4px rgba(138, 43, 226, 0.2); }
+.question-slide textarea.input-error { border-color: var(--error-color); animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+
+/* --- Pantalla Final y Botones --- */
+.submit-slide-content { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 1rem; }
+.submit-slide-content .submit-btn { width: 100%; margin-top: 1rem; }
+
+.survey-navigation { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; min-height: 50px; }
+.nav-btn, .submit-btn { padding: 0.8rem 1.5rem; font-size: 1rem; font-weight: 700; border: none; border-radius: 50px; cursor: pointer; transition: all 0.2s; }
+#prev-btn { background-color: #e9ecef; color: var(--text-light); }
+#prev-btn:hover { background-color: #d8dde3; }
+.submit-btn { color: white; background: linear-gradient(45deg, var(--unirem-purple), var(--unirem-blue)); }
+.submit-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); }
+.submit-btn:disabled, .submit-btn:disabled:hover { background: #ccc; cursor: not-allowed; box-shadow: none; transform: none; }
+
+/* --- ESTILOS PARA EL ESTADO DEL FORMULARIO --- */
+.form-status {
+    margin-top: 1rem; font-weight: 600; font-size: 0.9rem;
+    height: 1.5rem; transition: color 0.3s ease;
+}
+.form-status.processing { color: var(--text-light); }
+.form-status.success { color: var(--success-color); }
+.form-status.error { color: var(--error-color); }
+
+/* --- Mensaje Gracias, Footer, etc. --- */
+.thank-you-message { text-align: center; display: none; opacity: 0; transform: scale(0.9); }
+.checkmark { width: 100px; height: 100px; display: block; margin: 0 auto; }
+.checkmark-circle, .checkmark-check { animation-fill-mode: forwards; }
+.checkmark-circle { stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 3; stroke: var(--success-color); fill: none; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1); }
+.checkmark-check { transform-origin: 50% 50%; stroke-dasharray: 48; stroke-dashoffset: 48; stroke-width: 4; stroke: var(--success-color); animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s; }
+@keyframes stroke { 100% { stroke-dashoffset: 0; } }
+.loader-slide { min-height: 250px; display:flex; justify-content:center; align-items:center; }
+.loader { border: 5px solid rgba(255,255,255,0.3); border-top: 5px solid var(--unirem-purple); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+.site-footer { background: var(--unirem-dark); color: white; padding: 1.5rem 2rem; margin-top: auto; text-align: center; }
+.footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.footer-links a { color: #f8f9fa; text-decoration: none; margin: 0 0.5rem; }
+
+/* --- Media Queries para Pantallas Grandes --- */
+@media (min-width: 768px) {
+    .logo img { height: 45px; } .nav-toggle { display: none; } .nav-links-container { position: static; transform: none; background: none; backdrop-filter: none; width: auto; height: auto; } .nav-links { flex-direction: row; gap: 1.5rem; } .nav-links a { font-size: 1rem; font-weight: 500; } .navbar { background: rgba(30, 42, 58, 0.5); max-width: 1200px; margin: 1.5rem auto; padding: 0.75rem 2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); } #openDaySurveyForm, .thank-you-message { max-width: 550px; padding: 2.5rem; } .footer-content { flex-direction: row; justify-content: space-between; } .rating-options { grid-template-columns: repeat(5, 1fr); gap: 0.5rem; } .rating-option { padding: 1.25rem 0.5rem; font-size: 0.85rem; }
+}
