@@ -3,130 +3,55 @@
     "id": "organization",
     "text": "¿Qué tan satisfecho estás con la organización general del Open Day?",
     "options": [
-      {
-        "value": 1,
-        "label": "Malo"
-      },
-      {
-        "value": 2,
-        "label": "Regular"
-      },
-      {
-        "value": 3,
-        "label": "Bueno"
-      },
-      {
-        "value": 4,
-        "label": "Muy bueno"
-      },
-      {
-        "value": 5,
-        "label": "Excelente"
-      }
+      { "value": 1, "label": "Nada satisfecho" },
+      { "value": 2, "label": "Poco satisfecho" },
+      { "value": 3, "label": "Neutral" },
+      { "value": 4, "label": "Satisfecho" },
+      { "value": 5, "label": "Muy satisfecho" }
     ]
   },
   {
     "id": "clarity",
     "text": "¿Qué tan clara fue la presentación de nuestra oferta educativa?",
     "options": [
-      {
-        "value": 1,
-        "label": "Confusa"
-      },
-      {
-        "value": 2,
-        "label": "Poco clara"
-      },
-      {
-        "value": 3,
-        "label": "Adecuada"
-      },
-      {
-        "value": 4,
-        "label": "Clara"
-      },
-      {
-        "value": 5,
-        "label": "Muy clara"
-      }
+      { "value": 1, "label": "Confusa" },
+      { "value": 2, "label": "Poco clara" },
+      { "value": 3, "label": "Neutral" },
+      { "value": 4, "label": "Clara" },
+      { "value": 5, "label": "Muy clara" }
     ]
   },
   {
     "id": "staff_support",
-    "text": "¿Cómo calificarías la atención del personal durante el evento?",
+    "text": "¿Qué tan satisfecho(a) estás con la atención del personal durante el evento?",
     "options": [
-      {
-        "value": 1,
-        "label": "Deficiente"
-      },
-      {
-        "value": 2,
-        "label": "Regular"
-      },
-      {
-        "value": 3,
-        "label": "Buena"
-      },
-      {
-        "value": 4,
-        "label": "Muy buena"
-      },
-      {
-        "value": 5,
-        "label": "Excelente"
-      }
+      { "value": 1, "label": "Nada satisfecho" },
+      { "value": 2, "label": "Poco satisfecho" },
+      { "value": 3, "label": "Neutral" },
+      { "value": 4, "label": "Satisfecho" },
+      { "value": 5, "label": "Muy satisfecho" }
     ]
   },
   {
     "id": "information_quality",
-    "text": "¿Qué tan útil fue la información proporcionada sobre los servicios y la carrera de tu interes?",
+    "text": "¿Qué tan útil fue la información proporcionada sobre los servicios y la carrera de tu interés?",
     "options": [
-      {
-        "value": 1,
-        "label": "Nada útil"
-      },
-      {
-        "value": 2,
-        "label": "Poco útil"
-      },
-      {
-        "value": 3,
-        "label": "Adecuada"
-      },
-      {
-        "value": 4,
-        "label": "Útil"
-      },
-      {
-        "value": 5,
-        "label": "Muy útil"
-      }
+      { "value": 1, "label": "Nada útil" },
+      { "value": 2, "label": "Poco útil" },
+      { "value": 3, "label": "Neutral" },
+      { "value": 4, "label": "Útil" },
+      { "value": 5, "label": "Muy útil" }
     ]
   },
   {
     "id": "facilities",
-    "text": "¿Qué te parecieron las instalaciones que visitante durante el evento?",
+    "text": "¿Qué te parecieron las instalaciones que visitaste durante el evento?",
     "options": [
-      {
-        "value": 1,
-        "label": "Malas"
-      },
-      {
-        "value": 2,
-        "label": "Regulares"
-      },
-      {
-        "value": 3,
-        "label": "Buenas"
-      },
-      {
-        "value": 4,
-        "label": "Muy buenas"
-      },
-      {
-        "value": 5,
-        "label": "Excelentes"
-      }
+      { "value": 1, "label": "Muy malas" },
+      { "value": 2, "label": "Malas" },
+      { "value": 3, "label": "Regulares" },
+      { "value": 4, "label": "Buenas" },
+      { "value": 5, "label": "Excelentes" }
     ]
   },
   {
@@ -148,26 +73,11 @@
     "id": "recommendation",
     "text": "En general, ¿recomendarías este Open Day a otra persona?",
     "options": [
-      {
-        "value": 1,
-        "label": "No"
-      },
-      {
-        "value": 2,
-        "label": "Poco probable"
-      },
-      {
-        "value": 3,
-        "label": "Tal vez"
-      },
-      {
-        "value": 4,
-        "label": "Probable"
-      },
-      {
-        "value": 5,
-        "label": "Sí"
-      }
+      { "value": 1, "label": "No lo recomendaría" },
+      { "value": 2, "label": "Poco probable" },
+      { "value": 3, "label": "Tal vez" },
+      { "value": 4, "label": "Probable" },
+      { "value": 5, "label": "Definitivamente sí" }
     ]
   },
   {
@@ -177,54 +87,24 @@
   },
   {
     "id": "would_return",
-    "text": "¿Volverías a otro Open Day?",
+    "text": "¿Volverías a asistir a otro Open Day?",
     "options": [
-      {
-        "value": 1,
-        "label": "Nunca"
-      },
-      {
-        "value": 2,
-        "label": "No"
-      },
-      {
-        "value": 3,
-        "label": "Tal vez"
-      },
-      {
-        "value": 4,
-        "label": "Sí"
-      },
-      {
-        "value": 5,
-        "label": "Sí, por supuesto"
-      }
+      { "value": 1, "label": "Nunca" },
+      { "value": 2, "label": "No" },
+      { "value": 3, "label": "Tal vez" },
+      { "value": 4, "label": "Sí" },
+      { "value": 5, "label": "Sí, sin duda" }
     ]
   },
   {
     "id": "would_recommend",
     "text": "¿Recomendarías a un familiar o amigo inscribirse en UNIREM?",
     "options": [
-      {
-        "value": 1,
-        "label": "Nunca"
-      },
-      {
-        "value": 2,
-        "label": "No"
-      },
-      {
-        "value": 3,
-        "label": "Tal vez"
-      },
-      {
-        "value": 4,
-        "label": "Sí"
-      },
-      {
-        "value": 5,
-        "label": "Sí, por supuesto"
-      }
+      { "value": 1, "label": "Nunca" },
+      { "value": 2, "label": "No" },
+      { "value": 3, "label": "Tal vez" },
+      { "value": 4, "label": "Sí" },
+      { "value": 5, "label": "Sí, sin duda" }
     ]
   },
   {
@@ -239,28 +119,13 @@
   },
   {
     "id": "activity_duration",
-    "text": "¿Cómo fue la duración de las actividades?",
+    "text": "¿Cómo consideras la duración de las actividades?",
     "options": [
-      {
-        "value": 1,
-        "label": "Muy cortas"
-      },
-      {
-        "value": 2,
-        "label": "Cortas"
-      },
-      {
-        "value": 3,
-        "label": "Adecuadas"
-      },
-      {
-        "value": 4,
-        "label": "Largas"
-      },
-      {
-        "value": 5,
-        "label": "Muy largas"
-      }
+      { "value": 1, "label": "Muy cortas" },
+      { "value": 2, "label": "Cortas" },
+      { "value": 3, "label": "Adecuadas" },
+      { "value": 4, "label": "Largas" },
+      { "value": 5, "label": "Muy largas" }
     ]
   }
 ]
