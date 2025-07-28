@@ -29,14 +29,14 @@
         "text": "¿Desde tu área, qué aportaste para el Open Day?",
         "type": "text"
     },
-    {
-        "id": "future_contribution",
-        "text": "¿Desde tu área, qué aportarías para el siguiente Open Day?",
+        {
+        "id": "how_to_improve",
+        "text": "¿Cómo crees que podríamos mejorar el Open Day?",
         "type": "text"
     },
     {
-        "id": "how_to_improve",
-        "text": "¿Cómo crees que podríamos mejorar el Open Day?",
+        "id": "future_contribution",
+        "text": "¿Desde tu área, qué aportarías para el siguiente Open Day?",
         "type": "text"
     },
     {
