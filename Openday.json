@@ -1,131 +1,48 @@
+
 [
-  {
-    "id": "organization",
-    "text": "¿Qué tan satisfecho estás con la organización general del Open Day?",
-    "options": [
-      { "value": 1, "label": "Nada satisfecho" },
-      { "value": 2, "label": "Poco satisfecho" },
-      { "value": 3, "label": "Neutral" },
-      { "value": 4, "label": "Satisfecho" },
-      { "value": 5, "label": "Muy satisfecho" }
-    ]
+    {
+    "id": "what_is_openday",
+    "text": "¿Qué es el Open Day para ti?",
+    "type": "text"
   },
-  {
-    "id": "clarity",
-    "text": "¿Qué tan clara fue la presentación de nuestra oferta educativa?",
-    "options": [
-      { "value": 1, "label": "Confusa" },
-      { "value": 2, "label": "Poco clara" },
-      { "value": 3, "label": "Neutral" },
-      { "value": 4, "label": "Clara" },
-      { "value": 5, "label": "Muy clara" }
-    ]
+    {
+    "id": "who_invited",
+    "text": "¿Quién te comentó de la actividad?",
+    "type": "text"
   },
-  {
-    "id": "staff_support",
-    "text": "¿Qué tan satisfecho(a) estás con la atención del personal durante el evento?",
-    "options": [
-      { "value": 1, "label": "Nada satisfecho" },
-      { "value": 2, "label": "Poco satisfecho" },
-      { "value": 3, "label": "Neutral" },
-      { "value": 4, "label": "Satisfecho" },
-      { "value": 5, "label": "Muy satisfecho" }
-    ]
-  },
-  {
-    "id": "information_quality",
-    "text": "¿Qué tan útil fue la información proporcionada sobre los servicios y la carrera de tu interés?",
-    "options": [
-      { "value": 1, "label": "Nada útil" },
-      { "value": 2, "label": "Poco útil" },
-      { "value": 3, "label": "Neutral" },
-      { "value": 4, "label": "Útil" },
-      { "value": 5, "label": "Muy útil" }
-    ]
-  },
-  {
-    "id": "facilities",
-    "text": "¿Qué te parecieron las instalaciones que visitaste durante el evento?",
-    "options": [
-      { "value": 1, "label": "Muy malas" },
-      { "value": 2, "label": "Malas" },
-      { "value": 3, "label": "Regulares" },
-      { "value": 4, "label": "Buenas" },
-      { "value": 5, "label": "Excelentes" }
-    ]
-  },
-  {
-    "id": "best_part",
-    "text": "¿Qué fue lo que más te gustó del evento?",
+    {
+    "id": "activities_seen",
+    "text": "¿Qué actividades viste en el Open Day?",
     "type": "text"
   },
   {
-    "id": "improvement_areas",
-    "text": "¿Qué crees que podríamos mejorar para futuros eventos?",
+    "id": "improvement_area",
+    "text": "¿Qué área de oportunidad de mejora recomiendas?",
     "type": "text"
   },
   {
-    "id": "interested_program",
-    "text": "¿Qué carrera te interesó más?",
+    "id": "logistics_feedback",
+    "text": "¿Qué te pareció la logística del evento?",
+    "type": "text"
+  },
+    {
+    "id": "your_contribution",
+    "text": "¿Desde tu área, qué aportaste para el Open Day?",
     "type": "text"
   },
   {
-    "id": "recommendation",
-    "text": "En general, ¿recomendarías este Open Day a otra persona?",
-    "options": [
-      { "value": 1, "label": "No lo recomendaría" },
-      { "value": 2, "label": "Poco probable" },
-      { "value": 3, "label": "Tal vez" },
-      { "value": 4, "label": "Probable" },
-      { "value": 5, "label": "Definitivamente sí" }
-    ]
-  },
-  {
-    "id": "how_did_you_know",
-    "text": "¿Cómo conociste UNIREM?",
+    "id": "your_contribution",
+    "text": "¿Desde tu área, qué aportarías para el siguiente Open Day?",
     "type": "text"
   },
   {
-    "id": "would_return",
-    "text": "¿Volverías a asistir a otro Open Day?",
-    "options": [
-      { "value": 1, "label": "Nunca" },
-      { "value": 2, "label": "No" },
-      { "value": 3, "label": "Tal vez" },
-      { "value": 4, "label": "Sí" },
-      { "value": 5, "label": "Sí, sin duda" }
-    ]
-  },
-  {
-    "id": "would_recommend",
-    "text": "¿Recomendarías a un familiar o amigo inscribirse en UNIREM?",
-    "options": [
-      { "value": 1, "label": "Nunca" },
-      { "value": 2, "label": "No" },
-      { "value": 3, "label": "Tal vez" },
-      { "value": 4, "label": "Sí" },
-      { "value": 5, "label": "Sí, sin duda" }
-    ]
-  },
-  {
-    "id": "favorite_activity",
-    "text": "¿Cuál fue tu actividad favorita y por qué?",
+    "id": "how_to_improve",
+    "text": "¿Cómo crees que podríamos mejorar el Open Day?",
     "type": "text"
   },
   {
-    "id": "favorite_stand",
-    "text": "¿Cuál fue tu stand o lugar favorito y por qué?",
+    "id": "general_suggestion",
+    "text": "¿Qué sugieres para atraer mas personas a este tipo de eventos?",
     "type": "text"
-  },
-  {
-    "id": "activity_duration",
-    "text": "¿Cómo consideras la duración de las actividades?",
-    "options": [
-      { "value": 1, "label": "Muy cortas" },
-      { "value": 2, "label": "Cortas" },
-      { "value": 3, "label": "Adecuadas" },
-      { "value": 4, "label": "Largas" },
-      { "value": 5, "label": "Muy largas" }
-    ]
   }
 ]
