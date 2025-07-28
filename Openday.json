@@ -16,7 +16,7 @@
     },
     {
         "id": "improvement_area",
-        "text": "¿Qué área de oportunidad de mejora recomiendas?",
+        "text": "¿Qué área de mejora identificaste?",
         "type": "text"
     },
     {
@@ -41,7 +41,7 @@
     },
     {
         "id": "attraction_suggestion",
-        "text": "¿Qué sugieres para atraer mas personas a este tipo de eventos?",
+        "text": "¿Qué sugieres para atraer más personas a este tipo de eventos?",
         "type": "text"
     }
 ]
