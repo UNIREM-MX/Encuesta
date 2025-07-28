@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // === LÓGICA DE LA ENCUESTA v7.1: CORRECCIÓN PARA MÚLTIPLES PREGUNTAS DE TEXTO ===
+    // === LÓGICA DE LA ENCUESTA v9: CORRECCIÓN PARA ENVÍO CON IFRAME OCULTO ===
     const form = document.getElementById('openDaySurveyForm');
     const questionsWrapper = document.getElementById('questions-wrapper');
     const progressIndicator = document.getElementById('progress-indicator');
@@ -21,12 +21,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) throw new Error(`Network response was not ok (${response.status})`);
             const rawQuestions = await response.json();
             
+            // Verificamos que el JSON no esté vacío
+            if (!rawQuestions || rawQuestions.length === 0) {
+                 throw new Error("El archivo JSON está vacío o no tiene el formato correcto.");
+            }
+
             totalRealQuestions = rawQuestions.length;
             questionsData = [ ...rawQuestions, { id: "submission", type: "submit_screen", text: "Estás a un paso de terminar" } ];
             renderQuestions();
+            attachEventListeners();
             goToQuestion(0);
         } catch (error) {
-            questionsWrapper.innerHTML = `<div class="question-slide"><p>Error al cargar la encuesta. Revisa la ruta del archivo JSON.</p></div>`;
+            questionsWrapper.innerHTML = `<div class="question-slide"><p>Error al cargar la encuesta. Revisa la ruta y el contenido del archivo JSON.</p></div>`;
             console.error('Error fetching questions:', error);
         }
     }
@@ -36,10 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
         questionsData.forEach(q => {
             const slide = document.createElement('div');
             slide.className = 'question-slide';
+            slide.dataset.questionId = q.id;
             let contentHTML = '';
 
             if (q.type === 'text') {
-                contentHTML = `<h2 class="question-text">${q.text}</h2><textarea name="${q.id}" rows="5" placeholder="Escribe tu respuesta aquí..." autocomplete="off"></textarea>`;
+                contentHTML = `<h2 class="question-text">${q.text}</h2><textarea id="q-${q.id}" name="${q.id}" rows="5" placeholder="Escribe tu respuesta aquí..." autocomplete="off"></textarea>`;
             } else if (q.type === 'submit_screen') {
                 contentHTML = `
                     <div class="submit-slide-content">
@@ -59,45 +66,68 @@ document.addEventListener('DOMContentLoaded', () => {
             questionsWrapper.appendChild(slide);
         });
     }
-
-    /**
-     * CORRECCIÓN CLAVE: La lógica de guardado ahora es más robusta.
-     */
-    function goToQuestion(index) {
-        const departingQuestion = questionsData[currentQuestionIndex];
-
-        // 1. Guardar la respuesta del campo de texto actual (si aplica)
-        if (departingQuestion && departingQuestion.type === 'text') {
-            const textarea = document.querySelector(`.question-slide:nth-child(${currentQuestionIndex + 1}) textarea`);
-            
-            // 2. Validar solo si se intenta avanzar
-            if (index > currentQuestionIndex && textarea.value.trim() === '') {
-                textarea.classList.add('input-error');
-                setTimeout(() => textarea.classList.remove('input-error'), 500);
-                return; // Detiene el avance si el campo está vacío
-            }
-
-            // 3. Guardar o borrar la respuesta. ESTO CORRIGE EL BUG.
-            // Se ejecuta al ir adelante O atrás, manteniendo el estado consistente.
-            const answer = textarea.value.trim();
-            if (answer !== '') {
-                surveyAnswers[departingQuestion.id] = answer;
-            } else {
-                // Si el usuario borra el texto y retrocede, eliminamos la respuesta guardada
-                delete surveyAnswers[departingQuestion.id];
-            }
+    
+    function handleAnswer(questionId, value) {
+        if (value) {
+            surveyAnswers[questionId] = value;
+        } else {
+            delete surveyAnswers[questionId];
         }
-        
-        // 4. Moverse a la siguiente pregunta
-        currentQuestionIndex = index;
-        questionsWrapper.style.transform = `translateX(${-index * 100}%)`;
-        updateUI();
+        updateProgressAndSubmitButton();
     }
     
-    function updateUI() {
+    function updateProgressAndSubmitButton() {
         const answeredCount = Object.keys(surveyAnswers).length;
         const progressPercentage = totalRealQuestions > 0 ? (answeredCount / totalRealQuestions) * 100 : 0;
         progressBar.style.width = `${progressPercentage}%`;
+
+        const finalSubmitBtn = document.getElementById('final-submit-btn');
+        if (finalSubmitBtn) {
+            // Habilita el botón solo si se han respondido todas las preguntas REALES
+            finalSubmitBtn.disabled = answeredCount < totalRealQuestions;
+        }
+    }
+
+    function attachEventListeners() {
+        questionsWrapper.addEventListener('click', e => {
+            const ratingOption = e.target.closest('.rating-option');
+            if (!ratingOption) return;
+            
+            const { questionId, value } = ratingOption.dataset;
+            handleAnswer(questionId, value);
+            
+            ratingOption.parentElement.querySelectorAll('.rating-option').forEach(opt => {
+                for(let i=1; i<=5; i++) opt.classList.remove(`selected-${i}`);
+            });
+            ratingOption.classList.add(`selected-${value}`);
+            setTimeout(() => goToQuestion(currentQuestionIndex + 1), 300);
+        });
+
+        questionsWrapper.addEventListener('input', e => {
+            if (e.target.tagName === 'TEXTAREA') {
+                handleAnswer(e.target.name, e.target.value.trim());
+            }
+        });
+    }
+
+    function goToQuestion(index) {
+        if (index > currentQuestionIndex) {
+            const departingQuestion = questionsData[currentQuestionIndex];
+            if (departingQuestion.type === 'text' && !surveyAnswers[departingQuestion.id]) {
+                const textarea = document.getElementById(`q-${departingQuestion.id}`);
+                if (textarea) {
+                    textarea.classList.add('input-error');
+                    setTimeout(() => textarea.classList.remove('input-error'), 500);
+                }
+                return;
+            }
+        }
+        currentQuestionIndex = index;
+        questionsWrapper.style.transform = `translateX(${-index * 100}%)`;
+        updateScreenUI();
+    }
+    
+    function updateScreenUI() {
         progressIndicator.textContent = `Paso ${currentQuestionIndex + 1} de ${questionsData.length}`;
         prevBtn.style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
         
@@ -105,26 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (existingNavBtn) existingNavBtn.remove();
         
         const currentQuestion = questionsData[currentQuestionIndex];
-        
-        // Restaurar la respuesta guardada si existe
-        const savedAnswer = surveyAnswers[currentQuestion.id];
-        if (savedAnswer && currentQuestion.type === 'text') {
-            const textarea = document.querySelector(`.question-slide:nth-child(${currentQuestionIndex + 1}) textarea`);
-            if(textarea) textarea.value = savedAnswer;
-        } else if (savedAnswer && currentQuestion.options) {
-            const options = document.querySelectorAll(`.question-slide:nth-child(${currentQuestionIndex + 1}) .rating-option`);
-            options.forEach(opt => {
-                for(let i=1; i<=5; i++) opt.classList.remove(`selected-${i}`);
-                if (opt.dataset.value === savedAnswer) opt.classList.add(`selected-${savedAnswer}`);
-            });
-        }
-        
-        // Lógica de botones
-        if (currentQuestion.type === 'submit_screen') {
-            const finalSubmitBtn = document.getElementById('final-submit-btn');
-            // La corrección en el guardado de datos hace que este contador ahora sea fiable
-            if (finalSubmitBtn) finalSubmitBtn.disabled = answeredCount < totalRealQuestions;
-        } else if (currentQuestion.type === 'text') {
+        if (currentQuestion.type === 'text') {
             const actionBtn = document.createElement('button');
             actionBtn.id = 'submit-btn';
             actionBtn.className = 'submit-btn';
@@ -133,36 +144,34 @@ document.addEventListener('DOMContentLoaded', () => {
             actionBtn.onclick = () => goToQuestion(currentQuestionIndex + 1);
             navigationContainer.appendChild(actionBtn);
         }
-    }
-
-    questionsWrapper.addEventListener('click', e => {
-        const ratingOption = e.target.closest('.rating-option');
-        if (!ratingOption) return;
-        const { questionId, value } = ratingOption.dataset;
-        surveyAnswers[questionId] = value;
         
-        ratingOption.parentElement.querySelectorAll('.rating-option').forEach(opt => {
-            for(let i=1; i<=5; i++) opt.classList.remove(`selected-${i}`);
-        });
-        ratingOption.classList.add(`selected-${value}`);
-        setTimeout(() => goToQuestion(currentQuestionIndex + 1), 300);
-    });
+        const savedAnswer = surveyAnswers[currentQuestion.id];
+        if (savedAnswer && currentQuestion.type === 'text') {
+            const textarea = document.getElementById(`q-${currentQuestion.id}`);
+            if (textarea) textarea.value = savedAnswer;
+        }
+    }
     
     prevBtn.addEventListener('click', () => {
         if (currentQuestionIndex > 0) goToQuestion(currentQuestionIndex - 1);
     });
 
+    // ==================================================================
+    // === CORRECCIÓN CLAVE PARA EL ENVÍO DEL FORMULARIO CON IFRAME ===
+    // ==================================================================
     form.addEventListener('submit', e => {
-        e.preventDefault();
-        
+        // NO prevenimos la acción por defecto.
+        // e.preventDefault(); // <--- ESTA LÍNEA SE ELIMINA.
+
+        // Deshabilitamos el botón para evitar envíos duplicados.
         const submitButton = document.getElementById('final-submit-btn');
         if (submitButton) {
             submitButton.disabled = true;
             submitButton.textContent = 'Enviando...';
         }
 
+        // Creamos los inputs ocultos con las respuestas, como ya hacías.
         hiddenInputsContainer.innerHTML = '';
-        
         const sourceInput = document.createElement('input');
         sourceInput.type = 'hidden';
         sourceInput.name = 'form_source';
@@ -177,8 +186,11 @@ document.addEventListener('DOMContentLoaded', () => {
             hiddenInputsContainer.appendChild(input);
         }
         
-        form.submit();
+        // NO necesitamos llamar a form.submit() manualmente. El navegador lo hará
+        // por nosotros porque no hemos cancelado el evento.
 
+        // El formulario se enviará al iframe oculto. La página actual no se recargará.
+        // Por lo tanto, podemos ocultar el formulario y mostrar el mensaje de agradecimiento.
         setTimeout(() => {
             form.style.display = 'none';
             thankYouMessage.style.display = 'block';
@@ -186,8 +198,8 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 thankYouMessage.style.opacity = '1';
                 thankYouMessage.style.transform = 'scale(1)';
-            }, 50);
-        }, 1000);
+            }, 50); // Pequeña demora para la animación de entrada
+        }, 500); // Damos 500ms para que el envío comience antes de ocultar el formulario.
     });
 
     initializeSurvey();
