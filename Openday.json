@@ -1,48 +1,47 @@
-
 [
     {
-    "id": "what_is_openday",
-    "text": "¿Qué es el Open Day para ti?",
-    "type": "text"
-  },
+        "id": "what_is_openday",
+        "text": "¿Qué es el Open Day para ti?",
+        "type": "text"
+    },
     {
-    "id": "who_invited",
-    "text": "¿Quién te comentó de la actividad?",
-    "type": "text"
-  },
+        "id": "who_invited",
+        "text": "¿Quién te comentó de la actividad?",
+        "type": "text"
+    },
     {
-    "id": "activities_seen",
-    "text": "¿Qué actividades viste en el Open Day?",
-    "type": "text"
-  },
-  {
-    "id": "improvement_area",
-    "text": "¿Qué área de oportunidad de mejora identificaste?",
-    "type": "text"
-  },
-  {
-    "id": "logistics_feedback",
-    "text": "¿Qué te pareció la logística del evento?",
-    "type": "text"
-  },
+        "id": "activities_seen",
+        "text": "¿Qué actividades viste en el Open Day?",
+        "type": "text"
+    },
     {
-    "id": "your_contribution",
-    "text": "¿Desde tu área, qué aportaste para el Open Day?",
-    "type": "text"
-  },
-  {
-    "id": "your_contribution",
-    "text": "¿Desde tu área, qué aportarías para el siguiente Open Day?",
-    "type": "text"
-  },
-  {
-    "id": "how_to_improve",
-    "text": "¿Cómo crees que podríamos mejorar el Open Day?",
-    "type": "text"
-  },
-  {
-    "id": "general_suggestion",
-    "text": "¿Qué sugieres para atraer mas personas a este tipo de eventos?",
-    "type": "text"
-  }
+        "id": "improvement_area",
+        "text": "¿Qué área de oportunidad de mejora recomiendas?",
+        "type": "text"
+    },
+    {
+        "id": "logistics_feedback",
+        "text": "¿Qué te pareció la logística del evento?",
+        "type": "text"
+    },
+    {
+        "id": "past_contribution",
+        "text": "¿Desde tu área, qué aportaste para el Open Day?",
+        "type": "text"
+    },
+    {
+        "id": "future_contribution",
+        "text": "¿Desde tu área, qué aportarías para el siguiente Open Day?",
+        "type": "text"
+    },
+    {
+        "id": "how_to_improve",
+        "text": "¿Cómo crees que podríamos mejorar el Open Day?",
+        "type": "text"
+    },
+    {
+        "id": "attraction_suggestion",
+        "text": "¿Qué sugieres para atraer mas personas a este tipo de eventos?",
+        "type": "text"
+    }
 ]
