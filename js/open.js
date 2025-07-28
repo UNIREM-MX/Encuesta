@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // === LÓGICA DE LA ENCUESTA v7: MÉTODO IFRAME OCULTO (ANTI-CORS DEFINITIVO) ===
+    // === LÓGICA DE LA ENCUESTA v7.1: CORRECCIÓN PARA MÚLTIPLES PREGUNTAS DE TEXTO ===
     const form = document.getElementById('openDaySurveyForm');
     const questionsWrapper = document.getElementById('questions-wrapper');
     const progressIndicator = document.getElementById('progress-indicator');
@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function initializeSurvey() {
         try {
-            // Asegúrate de que esta ruta sea correcta para tu proyecto
             const response = await fetch('Openday.json');
             if (!response.ok) throw new Error(`Network response was not ok (${response.status})`);
             const rawQuestions = await response.json();
@@ -61,19 +60,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /**
+     * CORRECCIÓN CLAVE: La lógica de guardado ahora es más robusta.
+     */
     function goToQuestion(index) {
-        if (index > currentQuestionIndex) {
-            const departingQuestion = questionsData[currentQuestionIndex];
-            if (departingQuestion.type === 'text') {
-                const textarea = document.querySelector(`.question-slide:nth-child(${currentQuestionIndex + 1}) textarea`);
-                if (textarea.value.trim() === '') {
-                    textarea.classList.add('input-error');
-                    setTimeout(() => textarea.classList.remove('input-error'), 500);
-                    return;
-                }
-                surveyAnswers[departingQuestion.id] = textarea.value.trim();
+        const departingQuestion = questionsData[currentQuestionIndex];
+
+        // 1. Guardar la respuesta del campo de texto actual (si aplica)
+        if (departingQuestion && departingQuestion.type === 'text') {
+            const textarea = document.querySelector(`.question-slide:nth-child(${currentQuestionIndex + 1}) textarea`);
+            
+            // 2. Validar solo si se intenta avanzar
+            if (index > currentQuestionIndex && textarea.value.trim() === '') {
+                textarea.classList.add('input-error');
+                setTimeout(() => textarea.classList.remove('input-error'), 500);
+                return; // Detiene el avance si el campo está vacío
+            }
+
+            // 3. Guardar o borrar la respuesta. ESTO CORRIGE EL BUG.
+            // Se ejecuta al ir adelante O atrás, manteniendo el estado consistente.
+            const answer = textarea.value.trim();
+            if (answer !== '') {
+                surveyAnswers[departingQuestion.id] = answer;
+            } else {
+                // Si el usuario borra el texto y retrocede, eliminamos la respuesta guardada
+                delete surveyAnswers[departingQuestion.id];
             }
         }
+        
+        // 4. Moverse a la siguiente pregunta
         currentQuestionIndex = index;
         questionsWrapper.style.transform = `translateX(${-index * 100}%)`;
         updateUI();
@@ -85,24 +100,29 @@ document.addEventListener('DOMContentLoaded', () => {
         progressBar.style.width = `${progressPercentage}%`;
         progressIndicator.textContent = `Paso ${currentQuestionIndex + 1} de ${questionsData.length}`;
         prevBtn.style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
+        
         const existingNavBtn = document.querySelector('.survey-navigation #submit-btn');
         if (existingNavBtn) existingNavBtn.remove();
+        
         const currentQuestion = questionsData[currentQuestionIndex];
+        
+        // Restaurar la respuesta guardada si existe
         const savedAnswer = surveyAnswers[currentQuestion.id];
-        if (savedAnswer) {
-            if (currentQuestion.type === 'text') {
-                const textarea = document.querySelector(`.question-slide:nth-child(${currentQuestionIndex + 1}) textarea`);
-                if(textarea) textarea.value = savedAnswer;
-            } else if (currentQuestion.options) {
-                const options = document.querySelectorAll(`.question-slide:nth-child(${currentQuestionIndex + 1}) .rating-option`);
-                options.forEach(opt => {
-                    for(let i=1; i<=5; i++) opt.classList.remove(`selected-${i}`);
-                    if (opt.dataset.value === savedAnswer) opt.classList.add(`selected-${savedAnswer}`);
-                });
-            }
+        if (savedAnswer && currentQuestion.type === 'text') {
+            const textarea = document.querySelector(`.question-slide:nth-child(${currentQuestionIndex + 1}) textarea`);
+            if(textarea) textarea.value = savedAnswer;
+        } else if (savedAnswer && currentQuestion.options) {
+            const options = document.querySelectorAll(`.question-slide:nth-child(${currentQuestionIndex + 1}) .rating-option`);
+            options.forEach(opt => {
+                for(let i=1; i<=5; i++) opt.classList.remove(`selected-${i}`);
+                if (opt.dataset.value === savedAnswer) opt.classList.add(`selected-${savedAnswer}`);
+            });
         }
+        
+        // Lógica de botones
         if (currentQuestion.type === 'submit_screen') {
             const finalSubmitBtn = document.getElementById('final-submit-btn');
+            // La corrección en el guardado de datos hace que este contador ahora sea fiable
             if (finalSubmitBtn) finalSubmitBtn.disabled = answeredCount < totalRealQuestions;
         } else if (currentQuestion.type === 'text') {
             const actionBtn = document.createElement('button');
@@ -120,6 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ratingOption) return;
         const { questionId, value } = ratingOption.dataset;
         surveyAnswers[questionId] = value;
+        
         ratingOption.parentElement.querySelectorAll('.rating-option').forEach(opt => {
             for(let i=1; i<=5; i++) opt.classList.remove(`selected-${i}`);
         });
@@ -156,9 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
             hiddenInputsContainer.appendChild(input);
         }
         
-        form.submit(); // <-- Envío tradicional
+        form.submit();
 
-        // Asumimos éxito y mostramos la pantalla de agradecimiento
         setTimeout(() => {
             form.style.display = 'none';
             thankYouMessage.style.display = 'block';
